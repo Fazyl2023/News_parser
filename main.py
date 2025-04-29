@@ -6,6 +6,10 @@ from fake_useragent import UserAgent
 import datetime
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import asyncio
+import sys
+
+
+
 class newsBenzinga:
        
     def __init__(self):
@@ -60,6 +64,7 @@ class newsBenzinga:
                                
                            if str_n != []:
                                  await self.write_file(str_n)
+                                 print(str_n)
                            str_n = []
 
 
@@ -78,7 +83,12 @@ async def main():
     
     # Задаю параметры для автообновления csv таблицы
     scheduler = AsyncIOScheduler()
-    time = int(input("Введите через сколько секунд обнолвять таблицу: "))
+    if len(sys.argv) < 2:
+          print("Укажите время обновления в секундах.")
+          sys.exit(1)
+    
+    time = int(sys.argv[1])
+    print("Ваши новости обновляются каждую секунду.")
     
     scheduler.add_job(news_1.parsing, 'interval', seconds = time, args=[html])
     scheduler.start()
