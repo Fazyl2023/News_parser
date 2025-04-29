@@ -25,7 +25,7 @@ class newsBenzinga:
     async def except_url(self):
        try:
            all_rows = []
-           async with aiofiles.open('./newsAsync1.csv', 'r') as f: 
+           async with aiofiles.open('./news.csv', 'r') as f: 
                async for line in f:
                     all_rows.extend(line.strip().split(","))            
        except FileNotFoundError:
@@ -38,7 +38,7 @@ class newsBenzinga:
         
         # Список одной строчки csv файла (время, заголовок, ссылка)
         csv_head = ['time', 'title', 'url']   
-        async with aiofiles.open('./newsAsync1.csv', 'a') as f:                    
+        async with aiofiles.open('./news.csv', 'a') as f:                    
                    
                   if csv_head[2] not in await self.except_url():
                        await f.write(f"{','.join(map(str, csv_head))}\n")   
